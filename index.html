@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxury Room — Contrat de Location</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f5f0e8;font-family:'Lato',sans-serif;min-height:100vh;}
+input{font-family:'Cormorant Garamond',serif!important;}
+.hdr{background:#1a1208;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.hdr-brand{display:flex;align-items:center;gap:12px;}
+.hdr h1{font-family:'Cormorant Garamond',serif;font-size:20px;color:#c9a55a;font-weight:600;}
+.hdr p{font-size:9px;color:#6a5a3a;letter-spacing:2px;text-transform:uppercase;}
+.hdr-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.btn{padding:9px 18px;border-radius:6px;cursor:pointer;font-family:'Lato',sans-serif;font-size:13px;font-weight:600;border:none;transition:all .18s;}
+.btn:hover{filter:brightness(1.1);}
+.btn-out{background:#f5f0e8;color:#8b5e1a;border:1px solid #d4c090!important;}
+.btn-red{background:#3a1010;color:#e88888;}
+.btn-full{width:100%;padding:15px;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;border-radius:8px;border:none;transition:all .2s;cursor:not-allowed;background:#c5b89a;color:#9a8a6a;}
+.btn-full.ok{background:#1a1208;color:#c9a55a;cursor:pointer;}
+.wrap{max-width:700px;margin:0 auto;padding:32px 20px;}
+.card{background:#fff;border:1px solid #e8dcc8;border-radius:10px;padding:22px 26px;margin-bottom:18px;box-shadow:0 1px 8px rgba(0,0,0,.04);}
+.card h3{font-family:'Cormorant Garamond',serif;font-size:16px;color:#2c1f0e;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #f0e8d4;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:0 20px;}
+@media(max-width:520px){.g2{grid-template-columns:1fr;}}
+.f{margin-bottom:16px;}
+.f label{display:block;font-family:'Cormorant Garamond',serif;font-size:12px;color:#aaa;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:5px;transition:color .2s;}
+.f label.hi{color:#8b5e1a;}
+.f input{width:100%;padding:10px 13px;font-family:'Cormorant Garamond',serif;font-size:15px;border:1.5px solid #e0d5c5;border-radius:6px;background:#faf8f4;color:#2c2416;outline:none;transition:all .2s;}
+.f input:focus{border-color:#c9a55a;background:#fffef5;}
+.f input.hi{border-color:#c9a55a;background:#fffef5;}
+.f input[readonly]{background:#f7f3ec;border-color:#e8dcc8;color:#5a4a30;cursor:default;}
+.req{color:#c0392b;}
+.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
+.sl{font-family:'Cormorant Garamond',serif;font-size:13px;color:#8b7355;letter-spacing:1px;text-transform:uppercase;}
+.scbtn{font-size:11px;color:#c0392b;background:none;border:1px solid #c0392b;border-radius:4px;padding:2px 9px;cursor:pointer;display:none;}
+.sw{position:relative;border:1.5px solid #d4c5a9;border-radius:8px;overflow:hidden;background:#fffef9;}
+.sw canvas{width:100%;display:block;cursor:crosshair;touch-action:none;}
+.sph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.sph span{font-family:'Cormorant Garamond',serif;font-size:13px;color:#c4b49a;font-style:italic;}
+.ai{background:#fff8ee;border:1px solid #f0d9a0;border-radius:10px;padding:14px 18px;margin-bottom:22px;display:flex;gap:10px;}
+.ai p{font-family:'Lato',sans-serif;font-size:13px;color:#7a5a10;line-height:1.6;}
+.aok{background:#e8f5e9;border:1.5px solid #a5d6a7;border-radius:10px;padding:18px 22px;margin-bottom:22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.aok p{font-family:'Cormorant Garamond',serif;font-size:18px;color:#1b5e20;font-weight:600;}
+.aok small{font-family:'Lato',sans-serif;font-size:13px;color:#388e3c;margin-top:3px;display:block;}
+.lnkbox{background:#fff;border:1.5px solid #c9a55a;border-radius:10px;padding:14px 18px;display:flex;gap:12px;align-items:flex-start;margin-bottom:18px;}
+.lnkbox code{flex:1;font-size:11px;color:#5a3a10;font-family:monospace;line-height:1.5;word-break:break-all;}
+.cpbtn{padding:9px 14px;background:#1a1208;border:none;color:#c9a55a;border-radius:6px;cursor:pointer;font-family:'Lato',sans-serif;font-size:13px;font-weight:600;white-space:nowrap;flex-shrink:0;transition:all .2s;}
+.cpbtn.done{background:#e8f5e9;color:#2e7d32;}
+.ct-wrap{background:#fff;border:1.5px solid #e0d0b0;border-radius:10px;overflow:hidden;margin-bottom:20px;}
+.ct-head{background:#1a1208;padding:11px 20px;}
+.ct-head span{font-family:'Cormorant Garamond',serif;font-size:14px;color:#c9a55a;}
+/* ── Styles du contrat (utilisés à l'écran ET à l'impression) ── */
+.ct{font-family:'Georgia',serif;font-size:13.5px;line-height:1.85;color:#1a1208;padding:28px 36px;}
+@media(max-width:520px){.ct{padding:14px 12px;font-size:12px;}}
+.ct h2{text-align:center;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;letter-spacing:1px;border-bottom:2px solid #c9a55a;padding-bottom:10px;margin-bottom:18px;}
+.ct .bl{background:#fdf9f0;border:1px solid #e8d9b8;border-radius:5px;padding:10px 14px;margin-bottom:10px;}
+.ct .ar{margin-bottom:11px;}
+.ct .ar p:first-child{font-weight:700;margin-bottom:2px;}
+.sigs{margin-top:22px;padding-top:14px;border-top:1.5px solid #e0d0b0;display:flex;gap:24px;flex-wrap:wrap;}
+.sbox{flex:1;min-width:150px;}
+.sbox .stitle{font-weight:700;font-size:12px;margin-bottom:4px;}
+.sbox .sname{font-size:11px;color:#8b5e1a;font-weight:600;margin-bottom:5px;}
+.sbox .sname-gray{font-size:11px;color:#888;margin-bottom:5px;}
+.vl{color:#8b5e1a;font-weight:600;}
+.scr{display:none;}.scr.on{display:block;}
+#login-bg{min-height:100vh;background:#1a1208;display:none;align-items:center;justify-content:center;}
+#login-bg.on{display:flex;}
+.lbox{background:#251c0f;border:1px solid #3a2a10;border-radius:14px;padding:48px 44px;width:340px;max-width:94vw;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+
+/* ═══════════════════════════════════
+   IMPRESSION — règles strictes
+   • Seul #pz s'imprime
+   • position:static + pas de fixed → pas de répétition
+   • page-break évite les chevauchements
+═══════════════════════════════════ */
+@media print {
+  /* Cacher absolument tout */
+  html, body { background: #fff !important; }
+  body > * { display: none !important; }
+
+  /* Seul #pz visible, flux normal (pas fixed, pas absolute) */
+  #pz {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: #fff !important;
+  }
+
+  /* Contrat en flux normal pour pagination naturelle */
+  #pz .ct {
+    font-size: 11px !important;
+    line-height: 1.6 !important;
+    padding: 12px 20px !important;
+    color: #000 !important;
+  }
+  #pz .ct h2 { font-size: 15px !important; margin-bottom: 10px !important; }
+  #pz .ct .bl {
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+    padding: 6px 10px !important;
+    margin-bottom: 7px !important;
+  }
+  #pz .ct .ar { margin-bottom: 7px !important; }
+
+  /* Empêcher la coupure dans les blocs critiques */
+  #pz .ct .bl,
+  #pz .ct .ar,
+  #pz .sigs { page-break-inside: avoid !important; break-inside: avoid !important; }
+
+  /* Signatures : ne pas couper entre titre et image */
+  #pz .sigs { margin-top: 10px !important; }
+  #pz .sbox { page-break-inside: avoid !important; break-inside: avoid !important; }
+
+  /* Images de signature : taille fixe, pas de débordement */
+  #pz .sig-img {
+    display: block !important;
+    width: 160px !important;
+    height: 55px !important;
+    object-fit: contain !important;
+    border: 1px solid #ccc !important;
+    background: #fff !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ ZONE D'IMPRESSION — enfant direct de body, flux statique ═══ -->
+<!-- Vide au départ, rempli par JS au moment de la signature           -->
+<div id="pz"></div>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="login-bg" class="on">
+  <div class="lbox">
+    <div style="font-size:40px;margin-bottom:12px;">🏨</div>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#c9a55a;margin-bottom:5px;">Luxury Room</h1>
+    <p style="font-family:'Lato',sans-serif;font-size:10px;color:#6a5a3a;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;">Accès Bailleur</p>
+    <input type="password" id="pwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()"
+      style="width:100%;padding:11px 14px;background:#1a1208;border:1.5px solid #3a2a10;border-radius:8px;color:#e8dcc8;font-family:'Cormorant Garamond',serif;font-size:17px;outline:none;text-align:center;letter-spacing:4px;margin-bottom:14px;transition:border-color .2s;box-sizing:border-box;">
+    <div id="perr" style="color:#e87070;font-size:13px;font-family:'Lato',sans-serif;margin-bottom:10px;display:none;">Mot de passe incorrect</div>
+    <button onclick="doLogin()" style="width:100%;padding:12px;background:#c9a55a;border:none;color:#1a1208;border-radius:8px;cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;">Accéder →</button>
+    <p style="margin-top:16px;font-size:11px;color:#4a3a20;font-family:'Lato',sans-serif;">Mot de passe : <code style="color:#8a7040;">luxury2026</code></p>
+  </div>
+</div>
+
+<!-- ═══ BAILLEUR FORM ═══ -->
+<div id="s-form" class="scr">
+  <div class="hdr">
+    <div class="hdr-brand"><span style="font-size:20px;">🏨</span><div><h1>Luxury Room</h1><p>Interface Bailleur</p></div></div>
+    <div class="hdr-btns"><button class="btn btn-red" onclick="doLogout()">Déconnexion</button></div>
+  </div>
+  <div class="wrap">
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:26px;color:#2c1f0e;margin-bottom:22px;">Créer un contrat</h2>
+    <div class="card">
+      <h3>🏠 Votre identité (Bailleur)</h3>
+      <div class="f"><label id="l-bn">Nom / Dénomination <span class="req">*</span></label><input id="b_n" oninput="fl(this,'l-bn')" placeholder="SARL Luxury Room"></div>
+      <div class="f"><label id="l-ba">Adresse <span class="req">*</span></label><input id="b_a" oninput="fl(this,'l-ba')" placeholder="37 rue de l'église, 93420 Villepinte"></div>
+      <div class="f"><label id="l-bs">SIRET <span class="req">*</span></label><input id="b_s" oninput="fl(this,'l-bs')" placeholder="123 456 789 00012"></div>
+    </div>
+    <div class="card">
+      <h3>📅 Détails du séjour</h3>
+      <div class="g2">
+        <div class="f"><label id="l-dd">Date de début <span class="req">*</span></label><input id="d_d" oninput="fl(this,'l-dd')" placeholder="15/06/2026"></div>
+        <div class="f"><label id="l-df">Date de fin <span class="req">*</span></label><input id="d_f" oninput="fl(this,'l-df')" placeholder="17/06/2026"></div>
+        <div class="f"><label id="l-ha">Heure d'arrivée</label><input id="h_a" oninput="fl(this,'l-ha')" placeholder="15h00"></div>
+        <div class="f"><label id="l-hd">Heure de départ</label><input id="h_d" oninput="fl(this,'l-hd')" placeholder="11h00"></div>
+        <div class="f"><label id="l-mt">Montant total <span class="req">*</span></label><input id="m_t" oninput="fl(this,'l-mt')" placeholder="280 €"></div>
+        <div class="f"><label id="l-dg">Dépôt de garantie</label><input id="d_g" oninput="fl(this,'l-dg')" placeholder="100 €"></div>
+        <div class="f"><label id="l-ls">Lieu de signature <span class="req">*</span></label><input id="l_s" oninput="fl(this,'l-ls')" placeholder="Villepinte"></div>
+        <div class="f"><label id="l-ds">Date de signature</label><input id="d_s" oninput="fl(this,'l-ds')" placeholder="11/04/2026"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>✍️ Votre signature (Bailleur)</h3>
+      <div class="sh"><span class="sl">Signez ci-dessous</span><button class="scbtn" id="sc-b" onclick="clr('b')">✕ Effacer</button></div>
+      <div class="sw"><canvas id="cv-b" height="130"></canvas><div class="sph" id="ph-b"><span>Signez ici avec votre souris ou votre doigt…</span></div></div>
+    </div>
+    <button class="btn-full" id="btn-gen" onclick="genLink()">Remplissez les champs obligatoires (*)</button>
+    <p id="hint-b" style="text-align:center;font-size:12px;color:#aaa;margin-top:8px;font-family:'Lato',sans-serif;">Champs requis : Nom, Adresse, SIRET, Dates, Montant, Lieu</p>
+  </div>
+</div>
+
+<!-- ═══ LIEN GÉNÉRÉ ═══ -->
+<div id="s-link" class="scr">
+  <div class="hdr">
+    <div class="hdr-brand"><span style="font-size:20px;">🏨</span><div><h1>Luxury Room</h1><p>Interface Bailleur</p></div></div>
+    <div class="hdr-btns">
+      <button class="btn btn-out" onclick="show('s-form')">← Nouveau contrat</button>
+      <button class="btn btn-red" onclick="doLogout()">Déconnexion</button>
+    </div>
+  </div>
+  <div class="wrap" style="text-align:center;padding-top:36px;">
+    <div style="font-size:50px;margin-bottom:12px;">🎉</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:26px;color:#2c1f0e;margin-bottom:8px;">Lien client généré !</h2>
+    <p style="font-family:'Lato',sans-serif;font-size:14px;color:#7a6a4a;margin-bottom:24px;line-height:1.7;">Envoyez ce lien à votre client par SMS ou email.<br>Il lit le contrat, remplit ses infos, signe, et télécharge le PDF.</p>
+    <div class="lnkbox"><code id="lnk"></code><button class="cpbtn" id="cpbtn" onclick="cpLink()">📋 Copier</button></div>
+    <div class="ai" style="text-align:left;max-width:500px;margin:0 auto 0;">
+      <span style="font-size:16px;">ℹ️</span>
+      <p>Le client ouvre le lien → lit le contrat → remplit ses infos → signe → le PDF se télécharge automatiquement.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CLIENT : LECTURE + FORMULAIRE ═══ -->
+<div id="s-client" class="scr">
+  <div class="hdr"><div class="hdr-brand"><span style="font-size:20px;">🏨</span><div><h1>Luxury Room</h1><p>Signature de votre contrat</p></div></div></div>
+  <div class="wrap">
+
+    <div class="ai"><span style="font-size:18px;">📋</span>
+      <p>Lisez attentivement l'intégralité du contrat ci-dessous, puis complétez vos informations personnelles et apposez votre signature. Le PDF final sera téléchargé automatiquement.</p>
+    </div>
+
+    <!-- Contrat complet en lecture seule, affiché AVANT la signature -->
+    <div class="ct-wrap">
+      <div class="ct-head"><span>📄 Contrat de Location Saisonnière — à lire avant de signer</span></div>
+      <div id="ct-read"></div>
+    </div>
+
+    <!-- Formulaire client -->
+    <div class="card">
+      <h3>👤 Vos informations personnelles</h3>
+      <div class="f"><label id="lc-n">Nom complet <span class="req">*</span></label><input id="l_n" oninput="flc(this,'lc-n')" placeholder="Jean Dupont"></div>
+      <div class="f"><label id="lc-a">Adresse <span class="req">*</span></label><input id="l_a" oninput="flc(this,'lc-a')" placeholder="12 rue de la Paix, 75001 Paris"></div>
+      <div class="f"><label id="lc-t">Téléphone <span class="req">*</span></label><input id="l_t" oninput="flc(this,'lc-t')" placeholder="+33 6 12 34 56 78"></div>
+      <div class="f"><label id="lc-p">Pièce d'identité n° <span class="req">*</span></label><input id="l_p" oninput="flc(this,'lc-p')" placeholder="Numéro de CNI ou passeport"></div>
+    </div>
+
+    <div class="card">
+      <h3>✍️ Votre signature (« lu et approuvé »)</h3>
+      <p style="font-family:'Lato',sans-serif;font-size:13px;color:#7a6a4a;margin-bottom:14px;line-height:1.5;">En signant, vous confirmez avoir lu et accepté l'intégralité du contrat ci-dessus.</p>
+      <div class="sh"><span class="sl">Signez ci-dessous</span><button class="scbtn" id="sc-l" onclick="clr('l')">✕ Effacer</button></div>
+      <div class="sw"><canvas id="cv-l" height="130"></canvas><div class="sph" id="ph-l"><span>Signez ici avec votre souris ou votre doigt…</span></div></div>
+    </div>
+
+    <button class="btn-full" id="btn-sign" onclick="doSign()">Complétez tous les champs requis *</button>
+    <p id="hint-c" style="text-align:center;font-size:12px;color:#aaa;margin-top:8px;font-family:'Lato',sans-serif;">Tous les champs et la signature sont requis.</p>
+  </div>
+</div>
+
+<!-- ═══ CLIENT DONE ═══ -->
+<div id="s-done" class="scr">
+  <div class="hdr"><div class="hdr-brand"><span style="font-size:20px;">🏨</span><div><h1>Luxury Room</h1><p>Contrat signé</p></div></div></div>
+  <div class="wrap">
+    <div class="aok">
+      <span style="font-size:28px;">✅</span>
+      <div><p>Contrat signé avec succès !</p><small>Le PDF s'est téléchargé automatiquement. Conservez-le précieusement.</small></div>
+      <button onclick="generatePDF()" style="margin-left:auto;padding:9px 16px;background:#1a1208;border:none;color:#c9a55a;border-radius:6px;cursor:pointer;font-family:'Lato',sans-serif;font-size:13px;font-weight:600;">🖨 Re-télécharger</button>
+    </div>
+    <!-- Aperçu visuel post-signature (écran uniquement, pas imprimé) -->
+    <div id="ct-done-preview" class="ct-wrap"></div>
+  </div>
+</div>
+
+<!-- ═══ ERROR ═══ -->
+<div id="s-err" class="scr">
+  <div class="wrap" style="text-align:center;padding-top:80px;">
+    <div style="font-size:48px;margin-bottom:16px;">❌</div>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#c0392b;">Lien invalide</p>
+    <p style="font-family:'Lato',sans-serif;font-size:14px;color:#888;margin-top:8px;">Contactez votre bailleur pour obtenir un nouveau lien.</p>
+  </div>
+</div>
+
+<script>
+const PWD='luxury2026';
+let sigB=null, sigL=null, hasL=false, BD=null;
+
+/* ── SCREENS ── */
+function show(id){
+  document.querySelectorAll('.scr').forEach(e=>e.classList.remove('on'));
+  if(id) document.getElementById(id).classList.add('on');
+}
+
+/* ── BOOT ── */
+window.addEventListener('load',()=>{
+  const h=window.location.hash;
+  if(h && h.startsWith('#d=')){
+    document.getElementById('login-bg').classList.remove('on');
+    loadClient(h.slice(3));
+  } else {
+    setTimeout(()=>document.getElementById('pwd').focus(),100);
+  }
+});
+window.addEventListener('hashchange',()=>{
+  const h=window.location.hash;
+  if(h && h.startsWith('#d=')){ document.getElementById('login-bg').classList.remove('on'); loadClient(h.slice(3)); }
+});
+
+/* ── LOGIN ── */
+function doLogin(){
+  if(document.getElementById('pwd').value===PWD){
+    document.getElementById('login-bg').classList.remove('on');
+    show('s-form'); initSig('b');
+  } else {
+    const e=document.getElementById('perr');
+    e.style.display='block'; setTimeout(()=>e.style.display='none',1500);
+  }
+}
+function doLogout(){
+  document.getElementById('login-bg').classList.add('on');
+  show(null); document.getElementById('pwd').value='';
+}
+
+/* ── BAILLEUR ── */
+function fl(inp,lid){
+  const v=inp.value.trim().length>0;
+  document.getElementById(lid).classList.toggle('hi',v);
+  inp.classList.toggle('hi',v);
+  chkB();
+}
+function chkB(){
+  const ok=['b_n','b_a','b_s','d_d','d_f','m_t','l_s'].every(id=>document.getElementById(id).value.trim());
+  const btn=document.getElementById('btn-gen');
+  document.getElementById('hint-b').style.display=ok?'none':'block';
+  btn.classList.toggle('ok',ok);
+  btn.textContent=ok?'🔗 Générer le lien client →':'Remplissez les champs obligatoires (*)';
+}
+function gv(id){return document.getElementById(id).value;}
+
+function genLink(){
+  if(!document.getElementById('btn-gen').classList.contains('ok')) return;
+  let sb='';
+  if(sigB){ sb=document.getElementById('cv-b').toDataURL('image/jpeg',0.5); }
+  const data={
+    n:gv('b_n'), a:gv('b_a'), s:gv('b_s'),
+    dd:gv('d_d'), df:gv('d_f'), ha:gv('h_a'), hd:gv('h_d'),
+    mt:gv('m_t'), dg:gv('d_g'), ls:gv('l_s'), ds:gv('d_s'),
+    sb:sb
+  };
+  const enc=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  const link=window.location.origin+window.location.pathname+'#d='+enc;
+  document.getElementById('lnk').textContent=link;
+  show('s-link');
+}
+function cpLink(){
+  navigator.clipboard.writeText(document.getElementById('lnk').textContent).then(()=>{
+    const b=document.getElementById('cpbtn');
+    b.textContent='✓ Copié !'; b.classList.add('done');
+    setTimeout(()=>{ b.textContent='📋 Copier'; b.classList.remove('done'); },2500);
+  });
+}
+
+/* ── CLIENT ── */
+function loadClient(enc){
+  try{
+    BD=JSON.parse(decodeURIComponent(escape(atob(enc))));
+    // Afficher le contrat en lecture seule (sans infos locataire encore)
+    document.getElementById('ct-read').innerHTML = buildCT(null);
+    show('s-client');
+    initSig('l');
+  }catch(e){ show('s-err'); }
+}
+
+function flc(inp,lid){
+  document.getElementById(lid).classList.toggle('hi',inp.value.trim().length>0);
+  inp.classList.toggle('hi',inp.value.trim().length>0);
+  chkC();
+}
+function chkC(){
+  const ok=['l_n','l_a','l_t','l_p'].every(id=>document.getElementById(id).value.trim())&&hasL;
+  const btn=document.getElementById('btn-sign');
+  document.getElementById('hint-c').style.display=ok?'none':'block';
+  btn.classList.toggle('ok',ok);
+  btn.textContent=ok?'✅ Signer et télécharger le PDF':'Complétez tous les champs requis *';
+}
+
+// Données du contrat signé, stockées pour la génération PDF
+let SIGNED_LD = null;
+
+function doSign(){
+  if(!document.getElementById('btn-sign').classList.contains('ok')) return;
+  SIGNED_LD = {nom:gv('l_n'), adr:gv('l_a'), tel:gv('l_t'), pid:gv('l_p')};
+
+  // Aperçu dans l'écran "done"
+  const html = buildCT(SIGNED_LD);
+  document.getElementById('ct-done-preview').innerHTML =
+    '<div class="ct-head"><span>📄 Votre contrat signé</span></div>' + html;
+
+  show('s-done');
+
+  // Générer le PDF automatiquement après un court délai
+  setTimeout(() => generatePDF(), 600);
+}
+
+
+function generatePDF(){
+  if(!SIGNED_LD){ alert('Aucun contrat à télécharger.'); return; }
+  const ld = SIGNED_LD;
+
+  const btn = document.querySelector('#s-done button[onclick="generatePDF()"]');
+  if(btn){ btn.textContent = '⏳ Génération…'; btn.disabled = true; }
+
+  try {
+    const { jsPDF } = window.jspdf;
+    if(!jsPDF){ throw new Error('jsPDF non chargé'); }
+    const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
+
+    const PW=210, ML=14, MR=14, MT=14, MB=280;
+    const CW=PW-ML-MR;
+    let y=MT;
+
+    // Valeurs sûres (jamais undefined)
+    const bn  = String(BD.n  || '');
+    const ba  = String(BD.a  || '');
+    const bs  = String(BD.s  || '');
+    const bdd = String(BD.dd || '');
+    const bdf = String(BD.df || '');
+    const bha = String(BD.ha || '');
+    const bhd = String(BD.hd || '');
+    const bmt = String(BD.mt || '');
+    const bdg = String(BD.dg || '');
+    const bls = String(BD.ls || '');
+    const bds = String(BD.ds || '');
+    const arr = bdd + (bha ? ' à ' + bha : '');
+    const dep = bdf + (bhd ? ' à ' + bhd : '');
+
+    // ── Helpers ──
+    const DARK  = [26,18,8];
+    const GOLD  = [201,165,90];
+    const BROWN = [139,94,26];
+    const GRAY  = [100,90,80];
+
+    function newPage(){ doc.addPage(); y = MT; }
+    function chk(h){ if(y+h > MB) newPage(); }
+
+    function setFont(style, size, color){
+      doc.setFont('helvetica', style);
+      doc.setFontSize(size);
+      doc.setTextColor(color[0], color[1], color[2]);
+    }
+
+    // Écrire du texte avec wrap automatique, retourne la hauteur occupée
+    function writeText(text, x, maxW, lineH){
+      const lines = doc.splitTextToSize(text, maxW);
+      lines.forEach(function(line){
+        chk(lineH);
+        doc.text(line, x, y);
+        y += lineH;
+      });
+    }
+
+    // Bloc encadré (bailleur / locataire)
+    function drawBloc(rows){
+      var lineH = 4.5;
+      var padding = 3;
+      // Calculer hauteur totale du bloc
+      var totalH = padding;
+      rows.forEach(function(r){
+        var lines = doc.splitTextToSize(r.t, CW - 8);
+        totalH += lines.length * lineH;
+      });
+      totalH += padding;
+      chk(totalH + 4);
+      doc.setFillColor(253,248,234);
+      doc.setDrawColor(220,200,160);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(ML, y, CW, totalH, 2, 2, 'FD');
+      y += padding;
+      rows.forEach(function(r){
+        var lines = doc.splitTextToSize(r.t, CW - 8);
+        if(r.bold){       setFont('bold',   9, DARK);  }
+        else if(r.brown){ setFont('bold',   9, BROWN); }
+        else if(r.italic){setFont('italic', 9, GRAY);  }
+        else{             setFont('normal', 9, DARK);  }
+        lines.forEach(function(line){
+          chk(lineH);
+          doc.text(line, ML+4, y);
+          y += lineH;
+        });
+      });
+      y += padding + 2;
+    }
+
+    // Article avec titre gras + corps normal
+    function drawArt(title, body){
+      var lineH = 4.3;
+      var titleH = 5;
+      chk(titleH + lineH + 2);
+      setFont('bold', 9, DARK);
+      doc.text(title, ML, y);
+      y += titleH;
+      setFont('normal', 9, [40,30,20]);
+      writeText(body, ML, CW, lineH);
+      y += 2;
+    }
+
+    // ══════════════════════════════════════
+    // TITRE
+    // ══════════════════════════════════════
+    setFont('bold', 15, DARK);
+    doc.text('Contrat de Location Saisonnière Meublée', PW/2, y, {align:'center'});
+    y += 5;
+    doc.setDrawColor(GOLD[0],GOLD[1],GOLD[2]);
+    doc.setLineWidth(0.6);
+    doc.line(ML, y, ML+CW, y);
+    y += 6;
+
+    setFont('bold', 10, DARK);
+    doc.text('Entre les soussignés :', ML, y);
+    y += 6;
+
+    // ══════════════════════════════════════
+    // BLOCS PARTIES
+    // ══════════════════════════════════════
+    drawBloc([
+      {t:'Le Bailleur', bold:true},
+      {t:'Nom / Dénomination : ' + bn, brown:true},
+      {t:'Adresse : ' + ba, brown:true},
+      {t:'SIRET : ' + bs, brown:true},
+      {t:'Ci-après désigné « le Bailleur »', italic:true}
+    ]);
+
+    drawBloc([
+      {t:'Et le(s) Locataire(s)', bold:true},
+      {t:'Nom : ' + ld.nom, brown:true},
+      {t:'Adresse : ' + ld.adr, brown:true},
+      {t:'Téléphone : ' + ld.tel, brown:true},
+      {t:"Pièce d'identité n° : " + ld.pid, brown:true},
+      {t:"Ci-après désigné « le Locataire »", italic:true}
+    ]);
+
+    y += 2;
+
+    // ══════════════════════════════════════
+    // ARTICLES
+    // ══════════════════════════════════════
+    drawArt('Article 1 – Objet du contrat',
+      "Le présent contrat a pour objet la location saisonnière, à titre de résidence provisoire et de loisir, d'un logement meublé et équipé, à usage exclusif d'habitation. Le logement ne doit en aucun cas être utilisé comme résidence principale ni pour l'organisation de fêtes.");
+
+    drawArt('Article 2 – Désignation du logement',
+      "Adresse : 37 rue de l'église, 93420 Villepinte, bâtiment C porte 201\nType : Appartement meublé de standing\nÉquipements : lit double, jacuzzi privatif, télévision, linge de maison fourni, kitchenette équipée, salle de bain avec douche, etc.\nCapacité maximale : 2 personnes — Non-fumeur – Animaux non autorisés");
+
+    drawArt('Article 3 – Durée de la location',
+      "La location est conclue du : " + bdd + " au " + bdf + "\nArrivée : " + arr + " — Départ : " + dep + "\nLa location ne pourra être prolongée sans l'accord préalable du Bailleur.");
+
+    drawArt('Article 4 – Prix et modalités de paiement',
+      "Montant total de la location : " + bmt + "\nDépôt de garantie : " + bdg + " — restitué sous 24h après le départ, sauf retenue justifiée.");
+
+    drawArt('Article 5 – État des lieux',
+      "Un état des lieux et un inventaire sommaire sont réalisés à l'arrivée et au départ. Toute anomalie doit être signalée dans l'heure suivant l'entrée dans les lieux.");
+
+    drawArt('Article 6 – Obligations du locataire',
+      "Le locataire s'engage à lire et respecter le règlement intérieur, respecter la capacité maximale, ne pas organiser de fête sans autorisation, ne pas fumer, utiliser le jacuzzi conformément aux règles, et restituer le logement propre. Le non-respect peut entraîner l'expulsion immédiate sans remboursement ainsi que le retrait du dépôt de garantie.");
+
+    drawArt('Article 6 bis – Utilisation des équipements – responsabilité',
+      "Le locataire reconnaît utiliser les équipements (jacuzzi, éclairages, enceinte Bluetooth, etc.) sous sa seule responsabilité et s'engage à les utiliser de façon conforme. Le bailleur ne pourra être tenu responsable des blessures, incidents ou pannes liées à un mauvais usage.");
+
+    drawArt('Article 7 – Assurance et responsabilité',
+      "Le locataire est seul responsable pendant son séjour et doit être couvert par une assurance responsabilité civile. Le bailleur décline toute responsabilité pour les dommages ou pertes subis par le locataire ou ses invités.");
+
+    drawArt('Article 8 – Annulation / Interruption de séjour',
+      'Toute annulation doit être notifiée par écrit.');
+
+    drawArt('Article 9 – Litiges',
+      'Tout litige relèvera du tribunal du ressort du logement loué.');
+
+    drawArt('Article 10 – Acceptation des risques',
+      "Le locataire accepte les risques liés à l'usage du logement et de ses équipements et déclare les utiliser de façon responsable. Le bailleur ne pourra être tenu responsable en cas d'utilisation inadaptée ou imprudente.");
+
+    // ══════════════════════════════════════
+    // LIEU ET DATE
+    // ══════════════════════════════════════
+    y += 2;
+    chk(8);
+    setFont('normal', 9.5, DARK);
+    doc.text('Fait à ' + bls + ', le ' + bds, ML, y);
+    y += 10;
+
+    // ══════════════════════════════════════
+    // SIGNATURES
+    // ══════════════════════════════════════
+    chk(50);
+    doc.setDrawColor(200,185,160);
+    doc.setLineWidth(0.4);
+    doc.line(ML, y, ML+CW, y);
+    y += 6;
+
+    var sigY = y;
+    var col2 = ML + CW/2 + 5;
+    var colW = CW/2 - 5;
+
+    // -- Bailleur (gauche) --
+    setFont('bold', 9, DARK);
+    doc.text('Signature du Bailleur :', ML, sigY);
+    setFont('bold', 9, BROWN);
+    doc.text(bn, ML, sigY + 5);
+
+    if(BD.sb && BD.sb.length > 100){
+      try{
+        // Détecter le type (jpeg ou png)
+        var imgType = BD.sb.indexOf('image/jpeg') > -1 ? 'JPEG' : 'PNG';
+        doc.addImage(BD.sb, imgType, ML, sigY + 8, 55, 22);
+      } catch(e){
+        doc.setDrawColor(180,160,130); doc.setLineWidth(0.3);
+        doc.rect(ML, sigY+8, 55, 22);
+      }
+    } else {
+      doc.setDrawColor(180,160,130); doc.setLineWidth(0.3);
+      doc.rect(ML, sigY+8, 55, 22);
+    }
+
+    // -- Locataire (droite) --
+    setFont('bold', 9, DARK);
+    doc.text('Signature du Locataire :', col2, sigY);
+    setFont('italic', 8.5, GRAY);
+    doc.text("« lu et approuvé » — " + ld.nom, col2, sigY + 5);
+
+    if(sigL && sigL.length > 100){
+      try{
+        doc.addImage(sigL, 'PNG', col2, sigY + 8, 55, 22);
+      } catch(e){
+        doc.setDrawColor(180,160,130); doc.setLineWidth(0.3);
+        doc.rect(col2, sigY+8, 55, 22);
+      }
+    } else {
+      doc.setDrawColor(180,160,130); doc.setLineWidth(0.3);
+      doc.rect(col2, sigY+8, 55, 22);
+    }
+
+    // ══════════════════════════════════════
+    // GÉNÉRATION BLOB PDF
+    // ══════════════════════════════════════
+    var filename = 'contrat_luxury_room_' + ld.nom.replace(/[^a-zA-Z0-9]/g,'_') + '.pdf';
+    var pdfBytes = doc.output('arraybuffer');
+    var pdfBlob = new Blob([pdfBytes], {type:'application/pdf'});
+
+    // ══════════════════════════════════════
+    // ENVOI PDF SUR TELEGRAM
+    // ══════════════════════════════════════
+    var BOT_TOKEN = '8367114879:AAHBwEpl7ADsUbLSA8YUOQaJGT-XXPVwgSw';
+    var CHAT_ID   = '7743785635';
+
+    var bn2  = String(BD.n  || 'Bailleur');
+    var bdd2 = String(BD.dd || '');
+    var bdf2 = String(BD.df || '');
+    var bha2 = String(BD.ha || '');
+    var bhd2 = String(BD.hd || '');
+    var bmt2 = String(BD.mt || '');
+    var bdg2 = String(BD.dg || '');
+    var bls2 = String(BD.ls || '');
+    var bds2 = String(BD.ds || '');
+    var arr2 = bdd2 + (bha2 ? ' a ' + bha2 : '');
+    var dep2 = bdf2 + (bhd2 ? ' a ' + bhd2 : '');
+    var NL2  = String.fromCharCode(10);
+    var caption = [
+      'Nouveau contrat signe !',
+      '',
+      'Locataire : ' + ld.nom,
+      'Tel : ' + ld.tel,
+      'Piece identite : ' + ld.pid,
+      '',
+      'Sejour : ' + arr2 + ' -> ' + dep2,
+      'Montant : ' + bmt2,
+      'Depot : ' + bdg2,
+      '',
+      'Signe a ' + bls2 + ' le ' + bds2
+    ].join(NL2);
+
+    try {
+      var formData = new FormData();
+      formData.append('chat_id', CHAT_ID);
+      formData.append('document', pdfBlob, filename);
+      formData.append('caption', caption);
+
+      fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendDocument', {
+        method: 'POST',
+        body: formData
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if(data.ok){ console.log('Telegram: PDF envoyé'); }
+        else{ console.warn('Telegram sendDocument erreur:', data.description); }
+      })
+      .catch(function(e){ console.warn('Telegram PDF error:', e); });
+    } catch(te){
+      console.warn('Telegram envoi impossible:', te);
+    }
+
+    // ══════════════════════════════════════
+    // TÉLÉCHARGEMENT CLIENT
+    // ══════════════════════════════════════
+    var url = URL.createObjectURL(pdfBlob);
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if(isIOS){
+      window.open(url, '_blank');
+    } else {
+      var a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    }
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 15000);
+
+  } catch(err){
+    console.error('PDF error:', err);
+    alert('Erreur PDF : ' + err.message + '. Réessayez ou contactez le support.');
+  } finally {
+    if(btn){ btn.textContent = '⬇ Télécharger le PDF'; btn.disabled = false; }
+  }
+}
+
+/* ── CONSTRUCTION DU HTML CONTRAT ── */
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function xv(v){ return v&&String(v).trim()?`<span class="vl">${esc(v)}</span>`:`<span style="color:#c0a060;font-style:italic;font-size:11px;">—</span>`; }
+
+function buildCT(ld){
+  // Signature bailleur : encodée dans le lien
+  const sB = BD.sb
+    ? `<img class="sig-img" src="${BD.sb}" alt="Signature bailleur" style="display:block;width:160px;height:55px;object-fit:contain;border:1px solid #e0d0b0;border-radius:4px;background:#fff;">`
+    : `<div style="width:160px;height:55px;border:1px dashed #ccc;border-radius:4px;background:#fafaf8;"></div>`;
+
+  // Signature locataire : disponible seulement après signature
+  const sL = (ld && sigL)
+    ? `<img class="sig-img" src="${sigL}" alt="Signature locataire" style="display:block;width:160px;height:55px;object-fit:contain;border:1px solid #e0d0b0;border-radius:4px;background:#fff;">`
+    : `<div style="width:160px;height:55px;border:1px dashed #ccc;border-radius:4px;background:#fafaf8;display:flex;align-items:center;justify-content:center;"><span style="font-family:'Cormorant Garamond',serif;font-size:11px;color:#bbb;font-style:italic;">à signer</span></div>`;
+
+  const nom  = ld ? `<span class="vl">${esc(ld.nom)}</span>` : `<span style="color:#c0a060;font-style:italic;font-size:11px;">à compléter</span>`;
+  const adr  = ld ? `<span class="vl">${esc(ld.adr)}</span>` : `<span style="color:#c0a060;font-style:italic;font-size:11px;">à compléter</span>`;
+  const tel  = ld ? `<span class="vl">${esc(ld.tel)}</span>` : `<span style="color:#c0a060;font-style:italic;font-size:11px;">à compléter</span>`;
+  const pid  = ld ? `<span class="vl">${esc(ld.pid)}</span>` : `<span style="color:#c0a060;font-style:italic;font-size:11px;">à compléter</span>`;
+
+  return `<div class="ct">
+<h2>Contrat de Location Saisonnière Meublée</h2>
+<p style="margin-bottom:10px;font-weight:600;">Entre les soussignés :</p>
+
+<div class="bl">
+  <p><strong>Le Bailleur</strong></p>
+  <p>Nom / Dénomination : ${xv(BD.n)}</p>
+  <p>Adresse : ${xv(BD.a)}</p>
+  <p>SIRET : ${xv(BD.s)}</p>
+  <p style="font-style:italic;margin-top:4px;">Ci-après désigné « le Bailleur »</p>
+</div>
+
+<div class="bl">
+  <p><strong>Et le(s) Locataire(s)</strong></p>
+  <p>Nom : ${nom}</p>
+  <p>Adresse : ${adr}</p>
+  <p>Téléphone : ${tel}</p>
+  <p>Pièce d'identité n° : ${pid}</p>
+  <p style="font-style:italic;margin-top:4px;">Ci-après désigné « le Locataire »</p>
+</div>
+
+<div class="ar">
+  <p>Article 1 – Objet du contrat</p>
+  <p>Le présent contrat a pour objet la location saisonnière, à titre de résidence provisoire et de loisir, d'un logement meublé et équipé, à usage exclusif d'habitation. Le logement ne doit en aucun cas être utilisé comme résidence principale ni pour l'organisation de fêtes.</p>
+</div>
+<div class="ar">
+  <p>Article 2 – Désignation du logement</p>
+  <p>Adresse : 37 rue de l'église, 93420 Villepinte, bâtiment C porte 201<br>Type : Appartement meublé de standing<br>Équipements principaux : lit double, jacuzzi privatif, télévision, linge de maison fourni, kitchenette équipée, salle de bain avec douche, etc.<br>Capacité maximale d'accueil : 2 personnes — Non-fumeur – Animaux non autorisés</p>
+</div>
+<div class="ar">
+  <p>Article 3 – Durée de la location</p>
+  <p>La location est conclue pour une durée déterminée, du : ${xv(BD.dd)} au ${xv(BD.df)}<br>Date et heure d'arrivée : <span class="vl">${esc((BD.dd||'')+(BD.ha?' à '+BD.ha:''))}</span><br>Date et heure de départ : <span class="vl">${esc((BD.df||'')+(BD.hd?' à '+BD.hd:''))}</span><br>La location ne pourra être prolongée sans l'accord préalable du Bailleur.</p>
+</div>
+<div class="ar">
+  <p>Article 4 – Prix et modalités de paiement</p>
+  <p>Montant total de la location : ${xv(BD.mt)}<br>Un dépôt de garantie de ${xv(BD.dg)} sera demandé à l'arrivée. Il sera restitué au maximum 24h après le départ, sauf retenue justifiée telle qu'une casse ou un manquement au contrat de la part du locataire.</p>
+</div>
+<div class="ar">
+  <p>Article 5 – État des lieux</p>
+  <p>Un état des lieux et un inventaire sommaire sont réalisés à l'arrivée et au départ. Toute anomalie doit être signalée dans l'heure suivant l'entrée dans les lieux.</p>
+</div>
+<div class="ar">
+  <p>Article 6 – Obligations du locataire</p>
+  <p>Le locataire s'engage à lire et respecter le règlement intérieur reçu et affiché, respecter la capacité maximale, ne pas organiser de fête sans autorisation, ne pas fumer, utiliser le jacuzzi conformément aux règles, et restituer le logement propre. Le non-respect peut entraîner l'expulsion immédiate sans remboursement ainsi que le retrait d'une partie ou de la totalité du dépôt de garantie.</p>
+</div>
+<div class="ar">
+  <p>Article 6 bis – Utilisation des équipements – responsabilité</p>
+  <p>Le locataire reconnaît utiliser les équipements (jacuzzi, éclairages, enceinte Bluetooth, etc.) sous sa seule responsabilité et s'engage à les utiliser de façon conforme. Le bailleur ne pourra être tenu responsable des blessures, incidents ou pannes liées à un mauvais usage.</p>
+</div>
+<div class="ar">
+  <p>Article 7 – Assurance et responsabilité</p>
+  <p>Le locataire est seul responsable pendant son séjour et doit être couvert par une assurance responsabilité civile. Le bailleur décline toute responsabilité pour les dommages ou pertes subis par le locataire ou ses invités.</p>
+</div>
+<div class="ar">
+  <p>Article 8 – Annulation / Interruption de séjour</p>
+  <p>Toute annulation doit être notifiée par écrit.</p>
+</div>
+<div class="ar">
+  <p>Article 9 – Litiges</p>
+  <p>Tout litige relèvera du tribunal du ressort du logement loué.</p>
+</div>
+<div class="ar">
+  <p>Article 10 – Acceptation des risques</p>
+  <p>Le locataire accepte les risques liés à l'usage du logement et de ses équipements et déclare les utiliser de façon responsable. Le bailleur ne pourra être tenu responsable en cas d'utilisation inadaptée ou imprudente.</p>
+</div>
+
+<p style="margin-top:14px;">Fait à ${xv(BD.ls)}, le ${xv(BD.ds)}</p>
+
+<div class="sigs">
+  <div class="sbox">
+    <p class="stitle">Signature du Bailleur :</p>
+    <p class="sname">${esc(BD.n||'')}</p>
+    ${sB}
+  </div>
+  <div class="sbox">
+    <p class="stitle">Signature du Locataire :</p>
+    <p class="sname-gray">« lu et approuvé »${ld?' — '+esc(ld.nom):''}</p>
+    ${sL}
+  </div>
+</div>
+</div>`;
+}
+
+/* ── SIGNATURE PAD ── */
+function initSig(id){
+  const c=document.getElementById('cv-'+id), ctx=c.getContext('2d');
+  c.width=c.offsetWidth||620;
+  ctx.fillStyle='#fffef9'; ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle='#1a1208'; ctx.lineWidth=2.2; ctx.lineCap='round'; ctx.lineJoin='round';
+  let drawing=false;
+  function gp(e){
+    const r=c.getBoundingClientRect(), sx=c.width/r.width, sy=c.height/r.height;
+    const s=e.touches?e.touches[0]:e;
+    return {x:(s.clientX-r.left)*sx, y:(s.clientY-r.top)*sy};
+  }
+  c.addEventListener('mousedown',e=>{e.preventDefault();drawing=true;const p=gp(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+  c.addEventListener('mousemove',e=>{if(!drawing)return;const p=gp(e);ctx.lineTo(p.x,p.y);ctx.stroke();onDraw(id,c);});
+  c.addEventListener('mouseup',()=>drawing=false);
+  c.addEventListener('mouseleave',()=>drawing=false);
+  c.addEventListener('touchstart',e=>{e.preventDefault();drawing=true;const p=gp(e);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
+  c.addEventListener('touchmove',e=>{e.preventDefault();if(!drawing)return;const p=gp(e);ctx.lineTo(p.x,p.y);ctx.stroke();onDraw(id,c);},{passive:false});
+  c.addEventListener('touchend',()=>drawing=false);
+}
+function onDraw(id,c){
+  document.getElementById('ph-'+id).style.display='none';
+  document.getElementById('sc-'+id).style.display='inline';
+  if(id==='b'){ sigB=c.toDataURL('image/jpeg',0.5); }
+  else { sigL=c.toDataURL('image/png'); hasL=true; chkC(); }
+}
+function clr(id){
+  const c=document.getElementById('cv-'+id), ctx=c.getContext('2d');
+  ctx.fillStyle='#fffef9'; ctx.fillRect(0,0,c.width,c.height);
+  document.getElementById('ph-'+id).style.display='flex';
+  document.getElementById('sc-'+id).style.display='none';
+  if(id==='b'){ sigB=null; }
+  else { sigL=null; hasL=false; chkC(); }
+}
+</script>
+
+<!-- jsPDF chargé de façon asynchrone — n'empêche PAS le login de fonctionner -->
+<script>
+(function(){
+  var s = document.createElement('script');
+  s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+  s.async = true;
+  document.body.appendChild(s);
+})();
+</script>
+</body>
+</html>
