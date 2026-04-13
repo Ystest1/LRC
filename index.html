@@ -440,16 +440,27 @@ function gv(id){return document.getElementById(id).value;}
 
 function genLink(){
   if(!document.getElementById('btn-gen').classList.contains('ok')) return;
-  // Stocker la signature bailleur dans localStorage (même domaine = accessible côté client)
-  // Elle ne voyage PAS dans le lien → lien très court
+  // Signature ultra-compressée dans le lien (canvas 100x35, JPEG q=0.15)
+  // → ~700 chars total, tient dans un SMS/iMessage
+  var sb='';
   if(sigB){
-    try{ localStorage.setItem('lr_sig_b', document.getElementById('cv-b').toDataURL('image/jpeg',0.6)); }catch(e){}
+    try{
+      // Redessiner la signature sur un micro-canvas pour compression maximale
+      var miniCanvas = document.createElement('canvas');
+      miniCanvas.width = 70; miniCanvas.height = 22;
+      var mctx = miniCanvas.getContext('2d');
+      mctx.fillStyle = '#fff';
+      mctx.fillRect(0,0,70,22);
+      var srcCanvas = document.getElementById('cv-b');
+      mctx.drawImage(srcCanvas, 0, 0, 70, 22);
+      sb = miniCanvas.toDataURL('image/jpeg', 0.1);
+    }catch(e){ sb=''; }
   }
   const data={
     n:gv('b_n'), a:gv('b_a'), s:gv('b_s'),
     dd:gv('d_d'), df:gv('d_f'), ha:gv('h_a'), hd:gv('h_d'),
-    mt:gv('m_t'), dg:gv('d_g'), ls:gv('l_s'), ds:gv('d_s')
-    // sb absent du lien → récupéré depuis localStorage
+    mt:gv('m_t'), dg:gv('d_g'), ls:gv('l_s'), ds:gv('d_s'),
+    sb:sb
   };
   const enc=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
   const link=window.location.origin+window.location.pathname+'#d='+enc;
@@ -468,9 +479,6 @@ function cpLink(){
 function loadClient(enc){
   try{
     BD=JSON.parse(decodeURIComponent(escape(atob(enc))));
-    // Récupérer la signature bailleur depuis localStorage (même domaine GitHub Pages)
-    try{ var s=localStorage.getItem('lr_sig_b'); if(s) BD.sb=s; }catch(e){}
-    // Afficher le contrat en lecture seule (sans infos locataire encore)
     document.getElementById('ct-read').innerHTML = buildCT(null);
     show('s-client');
     initSig('l');
