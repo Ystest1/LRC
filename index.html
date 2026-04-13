@@ -447,12 +447,12 @@ function genLink(){
     try{
       // Redessiner la signature sur un micro-canvas pour compression maximale
       var miniCanvas = document.createElement('canvas');
-      miniCanvas.width = 70; miniCanvas.height = 22;
+      miniCanvas.width = 30; miniCanvas.height = 10;
       var mctx = miniCanvas.getContext('2d');
       mctx.fillStyle = '#fff';
-      mctx.fillRect(0,0,70,22);
+      mctx.fillRect(0,0,30,10);
       var srcCanvas = document.getElementById('cv-b');
-      mctx.drawImage(srcCanvas, 0, 0, 70, 22);
+      mctx.drawImage(srcCanvas, 0, 0, 30, 10);
       sb = miniCanvas.toDataURL('image/jpeg', 0.1);
     }catch(e){ sb=''; }
   }
