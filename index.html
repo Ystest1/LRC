@@ -440,27 +440,14 @@ function gv(id){return document.getElementById(id).value;}
 
 function genLink(){
   if(!document.getElementById('btn-gen').classList.contains('ok')) return;
-  // Signature ultra-compressée dans le lien (canvas 100x35, JPEG q=0.15)
-  // → ~700 chars total, tient dans un SMS/iMessage
-  var sb='';
+  // Signature stockée en localStorage — PAS dans le lien (trop long pour iMessage)
   if(sigB){
-    try{
-      // Redessiner la signature sur un micro-canvas pour compression maximale
-      var miniCanvas = document.createElement('canvas');
-      miniCanvas.width = 30; miniCanvas.height = 10;
-      var mctx = miniCanvas.getContext('2d');
-      mctx.fillStyle = '#fff';
-      mctx.fillRect(0,0,30,10);
-      var srcCanvas = document.getElementById('cv-b');
-      mctx.drawImage(srcCanvas, 0, 0, 30, 10);
-      sb = miniCanvas.toDataURL('image/jpeg', 0.1);
-    }catch(e){ sb=''; }
+    try{ localStorage.setItem('lr_sig_b', document.getElementById('cv-b').toDataURL('image/jpeg',0.7)); }catch(e){}
   }
   const data={
     n:gv('b_n'), a:gv('b_a'), s:gv('b_s'),
     dd:gv('d_d'), df:gv('d_f'), ha:gv('h_a'), hd:gv('h_d'),
-    mt:gv('m_t'), dg:gv('d_g'), ls:gv('l_s'), ds:gv('d_s'),
-    sb:sb
+    mt:gv('m_t'), dg:gv('d_g'), ls:gv('l_s'), ds:gv('d_s')
   };
   const enc=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
   const link=window.location.origin+window.location.pathname+'#d='+enc;
@@ -479,6 +466,8 @@ function cpLink(){
 function loadClient(enc){
   try{
     BD=JSON.parse(decodeURIComponent(escape(atob(enc))));
+    // Récupérer la signature bailleur depuis localStorage (même domaine GitHub Pages)
+    try{ var s=localStorage.getItem('lr_sig_b'); if(s) BD.sb=s; }catch(e){}
     document.getElementById('ct-read').innerHTML = buildCT(null);
     show('s-client');
     initSig('l');
